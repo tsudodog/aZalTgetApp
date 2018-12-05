@@ -7,6 +7,7 @@ public class Main {
         port(8080);
         MongoClient testClient = MongoConnection.CONNECTION.getClient();
         System.out.println(testClient.getCredential().toString());
+        System.out.println("test");
         get("/hello", (req, res) -> "Hello World");
     }
 }
