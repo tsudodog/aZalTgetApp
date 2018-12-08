@@ -1,5 +1,5 @@
 
-package entity;
+package redsky;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
@@ -73,10 +73,12 @@ public class Item {
     @SerializedName("item_state")
     @Expose
     private String itemState;
-    @SerializedName("specifications")
-    @Expose
-    private List<Object> specifications = null;
-    @SerializedName("attributes")
+//    @SerializedName("specifications")
+    // TODO: these fields are weird and dont have a clear subtype
+    // I don't feel they are extremely pertinent to the interview
+//    @Expose
+//    private List<Object> specifications = null;
+//    @SerializedName("attributes")
     @Expose
     private Attributes attributes;
     @SerializedName("country_of_origin")
@@ -88,12 +90,12 @@ public class Item {
     @SerializedName("subscription_eligible")
     @Expose
     private Boolean subscriptionEligible;
-    @SerializedName("ribbons")
-    @Expose
-    private List<Object> ribbons = null;
-    @SerializedName("tags")
-    @Expose
-    private List<Object> tags = null;
+//    @SerializedName("ribbons")
+//    @Expose
+//    private List<Object> ribbons = null;
+//    @SerializedName("tags")
+//    @Expose
+//    private List<Object> tags = null;
     @SerializedName("estore_item_status_code")
     @Expose
     private String estoreItemStatusCode;
@@ -283,13 +285,13 @@ public class Item {
         this.itemState = itemState;
     }
 
-    public List<Object> getSpecifications() {
-        return specifications;
-    }
-
-    public void setSpecifications(List<Object> specifications) {
-        this.specifications = specifications;
-    }
+//    public List<Object> getSpecifications() {
+//        return specifications;
+//    }
+//
+//    public void setSpecifications(List<Object> specifications) {
+//        this.specifications = specifications;
+//    }
 
     public Attributes getAttributes() {
         return attributes;
@@ -323,21 +325,21 @@ public class Item {
         this.subscriptionEligible = subscriptionEligible;
     }
 
-    public List<Object> getRibbons() {
-        return ribbons;
-    }
+//    public List<Object> getRibbons() {
+//        return ribbons;
+//    }
+//
+//    public void setRibbons(List<Object> ribbons) {
+//        this.ribbons = ribbons;
+//    }
 
-    public void setRibbons(List<Object> ribbons) {
-        this.ribbons = ribbons;
-    }
-
-    public List<Object> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<Object> tags) {
-        this.tags = tags;
-    }
+//    public List<Object> getTags() {
+//        return tags;
+//    }
+//
+//    public void setTags(List<Object> tags) {
+//        this.tags = tags;
+//    }
 
     public String getEstoreItemStatusCode() {
         return estoreItemStatusCode;

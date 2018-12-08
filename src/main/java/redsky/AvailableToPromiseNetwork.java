@@ -1,7 +1,6 @@
 
-package entity;
+package redsky;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -31,9 +30,11 @@ public class AvailableToPromiseNetwork {
     @SerializedName("availability_status")
     @Expose
     private String availabilityStatus;
-    @SerializedName("multichannel_options")
-    @Expose
-    private List<Object> multichannelOptions = null;
+
+    //TODO: these fields are kinda weird and don't have a clear subtype
+//    @SerializedName("multichannel_options")
+//    @Expose
+//    private List<Object> multichannelOptions = null;
     @SerializedName("is_infinite_inventory")
     @Expose
     private Boolean isInfiniteInventory;
@@ -117,13 +118,13 @@ public class AvailableToPromiseNetwork {
         this.availabilityStatus = availabilityStatus;
     }
 
-    public List<Object> getMultichannelOptions() {
-        return multichannelOptions;
-    }
-
-    public void setMultichannelOptions(List<Object> multichannelOptions) {
-        this.multichannelOptions = multichannelOptions;
-    }
+//    public List<Object> getMultichannelOptions() {
+//        return multichannelOptions;
+//    }
+//
+//    public void setMultichannelOptions(List<Object> multichannelOptions) {
+//        this.multichannelOptions = multichannelOptions;
+//    }
 
     public Boolean getIsInfiniteInventory() {
         return isInfiniteInventory;

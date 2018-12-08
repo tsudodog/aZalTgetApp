@@ -1,17 +1,21 @@
 
-package entity;
+package redsky;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.bson.types.ObjectId;
-import xyz.morphia.annotations.Id;
+import xyz.morphia.annotations.*;
 
+@Entity("products")
+@Indexes(
+        @Index(value = "itemId", fields = @Field("product.item.tcin"))
+)
 public class Product {
     @Id
     ObjectId id;
 
 
-    Product(){
+    public Product(){
         this.id = new ObjectId();
     }
 

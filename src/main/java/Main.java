@@ -1,30 +1,38 @@
 import com.google.gson.Gson;
-import com.mongodb.MongoClient;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import dao.ProductDAOImpl;
-import entity.Product;
-import mongoDB.MongoConnection;
+import myRetail.MyRetailProduct;
+import redsky.Product;
 import org.apache.commons.lang3.StringUtils;
-import org.bson.types.ObjectId;
+import redsky.RedSkyAPI;
 
 import static spark.Spark.*;
 public class Main {
     public static void main(String[] args) {
         port(8080);
-        MongoClient testClient = MongoConnection.CONNECTION.getClient();
-        System.out.println(testClient.getCredential().toString());
-        System.out.println("test");
 
-        ProductDAOImpl productDAO = new ProductDAOImpl();
-//        Product p = new Product(1, "FluffyDragon Toy", 1010F);
-//        productDAO.addProduct(p);
-//        Product p2 = productDAO.findProductByProductID(new ObjectId("5c09bacd84150db2f0044074"));
-//        System.out.println(p2.getName());
         get("/products/:productID", (req, res) -> {
-
-
             String productID = StringUtils.isNumeric(req.params(":productID")) ? req.params(":productID") : "";
-            return productID;
+            System.out.println("productID \t"+productID);
+            Product redSkyProduct = RedSkyAPI.getProductByProductID(productID);
+
+            ProductDAOImpl productDAO = new ProductDAOImpl();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            MyRetailProduct myRetailProduct = productDAO.findProductByProductID(productID);
+            if(myRetailProduct == null){
+                myRetailProduct = new MyRetailProduct(productID);
+                productDAO.addProduct(myRetailProduct);
+            }
+            JsonObject jso = new JsonObject();
+            jso.addProperty("name", redSkyProduct.getProduct().getItem().getProductDescription().getTitle());
+            jso.add("current_price", gson.toJsonTree(myRetailProduct.getCurrentPrice()));
+
+//            return returnProduct == null ? "{\"error\" : \"Product Not Found\"}" : gson.toJson(returnProduct);
+            return jso.toString();
         });
+
+
 
         put("/products", (req, res) -> {
             System.out.println("hello?");
@@ -34,14 +42,12 @@ public class Main {
             if ("application/json".equals(contentType)) {
                 // this is JSON information and can be parsed
                 // use GSON to map to Pojo
+                ProductDAOImpl productDAO = new ProductDAOImpl();
                 Gson gson = new Gson();
                 Product incomingProduct = gson.fromJson(req.body(), Product.class);
-                productDAO.addProduct(incomingProduct);
+//                productDAO.addProduct(incomingProduct);
             }
 
-
-//            req.attribute("Content-Type");
-//            System.out.println(req.attribute("Content-Type").toString());
             return "success?";
         });
 

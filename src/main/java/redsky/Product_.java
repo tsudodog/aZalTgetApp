@@ -1,5 +1,5 @@
 
-package entity;
+package redsky;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -15,6 +15,10 @@ public class Product_ {
     @SerializedName("item")
     @Expose
     private Item item;
+
+    @SerializedName("price")
+    @Expose
+    private Price price;
 
     public DeepRedLabels getDeepRedLabels() {
         return deepRedLabels;

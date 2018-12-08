@@ -1,5 +1,5 @@
 
-package entity;
+package redsky;
 
 
 public class Variation {

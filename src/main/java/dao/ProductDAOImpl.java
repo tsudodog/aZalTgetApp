@@ -1,9 +1,9 @@
 package dao;
 
 import com.mongodb.MongoClient;
-import entity.Product;
+import myRetail.MyRetailProduct;
+import redsky.Product;
 import mongoDB.MongoConnection;
-import org.bson.types.ObjectId;
 import xyz.morphia.Datastore;
 import xyz.morphia.Morphia;
 
@@ -15,7 +15,7 @@ public class ProductDAOImpl {
     MongoClient mongoClient = MongoConnection.CONNECTION.getClient();
     Datastore datastore = new Morphia().createDatastore(mongoClient, "mdv-target-app");
 
-    public String addProduct(Product product) {
+    public String addProduct(MyRetailProduct product) {
         datastore.save(product);
         return "Product saved Successfully:\t";
     }
@@ -28,10 +28,10 @@ public class ProductDAOImpl {
         return new ArrayList<Product>();
     }
 
-    public Product findProductByProductID(final String productID){
+    public MyRetailProduct findProductByProductID(final String productID){
 
-        return datastore.createQuery(Product.class)
-                .field("product.item.tcin")
+        return datastore.createQuery(MyRetailProduct.class)
+                .field("itemID")
                 .equal(productID)
                 .asList()
                 .stream()

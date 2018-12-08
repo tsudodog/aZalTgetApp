@@ -1,5 +1,5 @@
 
-package entity;
+package redsky;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
