@@ -16,7 +16,6 @@ public class Main {
             String productID = StringUtils.isNumeric(req.params(":productID")) ? req.params(":productID") : "";
             System.out.println("productID \t"+productID);
             Product redSkyProduct = RedSkyAPI.getProductByProductID(productID);
-
             ProductDAOImpl productDAO = new ProductDAOImpl();
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             MyRetailProduct myRetailProduct = productDAO.findProductByProductID(productID);
@@ -27,15 +26,13 @@ public class Main {
             JsonObject jso = new JsonObject();
             jso.addProperty("name", redSkyProduct.getProduct().getItem().getProductDescription().getTitle());
             jso.add("current_price", gson.toJsonTree(myRetailProduct.getCurrentPrice()));
-
-//            return returnProduct == null ? "{\"error\" : \"Product Not Found\"}" : gson.toJson(returnProduct);
-            return jso.toString();
+            return redSkyProduct == null ? "{\"error\" : \"Product Not Found\"}" : jso.toString();
         });
 
 
 
-        put("/products", (req, res) -> {
-            System.out.println("hello?");
+        put("/products/:productID", (req, res) -> {
+
 
             String contentType = req.headers("Content-Type");
 
@@ -44,7 +41,9 @@ public class Main {
                 // use GSON to map to Pojo
                 ProductDAOImpl productDAO = new ProductDAOImpl();
                 Gson gson = new Gson();
-                Product incomingProduct = gson.fromJson(req.body(), Product.class);
+                JsonObject jso = gson.fromJson(req.body(), JsonObject.class);
+                System.out.println(jso);
+
 //                productDAO.addProduct(incomingProduct);
             }
 
