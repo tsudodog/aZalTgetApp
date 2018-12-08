@@ -11,8 +11,20 @@ import java.util.Optional;
 
 import static spark.Spark.*;
 public class Main {
+
+
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            Integer i =  Integer.parseInt(processBuilder.environment().get("PORT"));
+            System.out.println(i);
+            return i;
+        }
+        return 8080;
+    }
+
     public static void main(String[] args) {
-        port(8080);
+        port(getHerokuAssignedPort());
 
         get("/products/:productID", (req, res) -> {
             String productID = StringUtils.isNumeric(req.params(":productID")) ? req.params(":productID") : "";
