@@ -20,6 +20,10 @@ public class Product_ {
     @Expose
     private Price price;
 
+    public Product_(){
+        this.item = new Item();
+    }
+
     public DeepRedLabels getDeepRedLabels() {
         return deepRedLabels;
     }

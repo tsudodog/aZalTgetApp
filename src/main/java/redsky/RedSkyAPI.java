@@ -2,9 +2,11 @@ package redsky;
 
 import com.google.gson.Gson;
 import jdk.net.SocketFlow;
+import myRetail.MyRetailProduct;
 import org.eclipse.jetty.http.HttpStatus;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -40,7 +42,7 @@ public class RedSkyAPI {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            return new Product();
         }
         return null;
     }

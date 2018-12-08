@@ -17,6 +17,7 @@ public class Product {
 
     public Product(){
         this.id = new ObjectId();
+        this.product = new Product_();
     }
 
     @SerializedName("product")

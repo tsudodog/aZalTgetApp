@@ -1,6 +1,7 @@
 
 package redsky;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -17,6 +18,12 @@ public class ProductDescription {
     @Expose
     private String generalDescription;
 
+
+    public ProductDescription(){
+        this.title = "";
+        this.bulletDescription = new ArrayList<>();
+        this.generalDescription = "";
+    }
     public String getTitle() {
         return title;
     }

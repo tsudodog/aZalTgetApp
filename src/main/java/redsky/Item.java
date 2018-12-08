@@ -109,6 +109,10 @@ public class Item {
     @Expose
     private Boolean giftingEnabled;
 
+    public Item(){
+        this.productDescription = new ProductDescription();
+    }
+
     public String getTcin() {
         return tcin;
     }
