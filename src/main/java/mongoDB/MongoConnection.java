@@ -3,6 +3,7 @@ package mongoDB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoCredential;
+import org.omg.CORBA.Environment;
 
 public enum MongoConnection {
     CONNECTION;
@@ -11,7 +12,17 @@ public enum MongoConnection {
     private MongoConnection() {
 
         try {
-            client = new MongoClient(new MongoClientURI("mongodb://dbaccess:m3ttKJRjwLK78wPL6gMk@ds033046.mlab.com:33046/mdv-target-app"));
+            String username = System.getenv("mdb_usr");
+            String password = System.getenv("mdb_pass");
+            StringBuilder sb = new StringBuilder();
+            sb.append("mongodb://");
+//            sb.append(username);
+            sb.append("targetUser");
+            sb.append(":");
+//            sb.append(password);
+            sb.append("targetUser1");
+            sb.append("@ds033046.mlab.com:33046/mdv-target-app");
+            client = new MongoClient(new MongoClientURI(sb.toString()));
         } catch (Exception e){
             e.printStackTrace();
             // TODO: Log exception
