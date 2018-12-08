@@ -64,10 +64,12 @@ public class Main {
             return "update to " +  productID+ " was successful!";
         });
 
-
+        notFound("<html><body><h1>You seem to be lost!</h1></body></html>");
+        internalServerError("<html><body><h1>Fail Whale goes splat!</h1></body></html>");
         get("/", (req, res) -> {
             return "Server Working";
         });
+
 
     }
 }
