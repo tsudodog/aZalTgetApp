@@ -26,7 +26,6 @@ public class GetProductHandler extends AbstractRequestHandler<String> {
     @Override
     protected Answer processImpl(String value, Map<String, String> queryParams) {
         String productID = StringUtils.isNumeric(queryParams.get(":productid")) ? queryParams.get(":productid") : "";
-        System.out.println("productID \t"+productID);
         Product redSkyProduct = RedSkyAPI.getProductByProductID(productID);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         MyRetailProduct myRetailProduct = productDAO.findProductByProductID(productID);
