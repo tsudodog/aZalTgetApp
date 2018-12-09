@@ -21,7 +21,7 @@ public class PutProductHandler extends AbstractRequestHandler<JsonObject> {
 
     @Override
     protected Answer processImpl(JsonObject value, Map<String, String> queryParams) {
-        
+
         String productID = StringUtils.isNumeric(queryParams.get(":productid")) ? queryParams.get(":productid") : "";
         if (StringUtils.isNotEmpty(productID)) {
             ProductDAOImpl productDAO = new ProductDAOImpl();
