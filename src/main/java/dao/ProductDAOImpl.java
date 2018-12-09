@@ -12,7 +12,7 @@ import xyz.morphia.query.UpdateResults;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDAOImpl {
+public class ProductDAOImpl implements ProductDAO {
 
     MongoClient mongoClient = MongoConnection.CONNECTION.getClient();
     Datastore datastore = new Morphia().createDatastore(mongoClient, "mdv-target-app");
@@ -23,15 +23,15 @@ public class ProductDAOImpl {
         return "Product saved Successfully:\t";
     }
 
-    public List<MyRetailProduct> getAllProduct(){
+    public List<MyRetailProduct> getAllProduct() {
         List<MyRetailProduct> list = datastore.find(MyRetailProduct.class).asList();
-        if(list!=null){
+        if (list != null) {
             return list;
         }
         return new ArrayList<MyRetailProduct>();
     }
 
-    public MyRetailProduct findProductByProductID(final String productID){
+    public MyRetailProduct findProductByProductID(final String productID) {
 
         return datastore.createQuery(MyRetailProduct.class)
                 .field("itemID")
@@ -42,7 +42,7 @@ public class ProductDAOImpl {
                 .orElse(null);
     }
 
-    public void updateRetailProduct(MyRetailProduct productToUpdate){
+    public void updateRetailProduct(MyRetailProduct productToUpdate) {
         final Query<MyRetailProduct> productQuery = datastore.createQuery(MyRetailProduct.class).filter("itemID", productToUpdate.getItemID());
         final UpdateOperations<MyRetailProduct> updateOperations = datastore.createUpdateOperations(MyRetailProduct.class).set("currentPrice", productToUpdate.getCurrentPrice());
         final UpdateResults updateResults = datastore.update(productQuery, updateOperations);

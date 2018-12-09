@@ -1,11 +1,13 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import dao.ProductDAO;
 import dao.ProductDAOImpl;
 import myRetail.MyRetailProduct;
 import redsky.Product;
 import org.apache.commons.lang3.StringUtils;
 import redsky.RedSkyAPI;
+import spark.Route;
 
 import java.util.Optional;
 
@@ -25,12 +27,16 @@ public class Main {
 
     public static void main(String[] args) {
         port(getHerokuAssignedPort());
+        ProductDAO productDAO2 = new ProductDAOImpl();
+
+        get("/experiment/:productID", new GetProductHandler(productDAO2));
+
 
         get("/products/:productID", (req, res) -> {
             String productID = StringUtils.isNumeric(req.params(":productID")) ? req.params(":productID") : "";
             System.out.println("productID \t"+productID);
             Product redSkyProduct = RedSkyAPI.getProductByProductID(productID);
-            ProductDAOImpl productDAO = new ProductDAOImpl();
+            ProductDAO productDAO = new ProductDAOImpl();
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             MyRetailProduct myRetailProduct = productDAO.findProductByProductID(productID);
             if(myRetailProduct == null){
