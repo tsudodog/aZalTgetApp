@@ -1,9 +1,6 @@
 package handlers;
 
 import dao.ProductDAO;
-import dao.ProductDAOImpl;
-import handlers.Answer;
-import handlers.GetProductHandler;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,8 +10,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import redsky.Product;
 import redsky.RedSkyAPI;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -23,14 +18,13 @@ import static org.mockito.Mockito.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(RedSkyAPI.class)
-public class test {
-//    private GetProductHandler getProductHandler;
+public class GetProductHandlerTest {
+
     private ProductDAO mockProductDAO;
 
     @Before
     public void setUp(){
         mockProductDAO = mock(ProductDAO.class);
-//        getProductHandler = new GetProductHandler(mockProductDAO);
         PowerMockito.mockStatic(RedSkyAPI.class);
 
     }
@@ -42,10 +36,8 @@ public class test {
         Map<String, String> valueMap = new TreeMap<>();
         valueMap.put(":productid", testProductID);
 
-
         PowerMockito.when(RedSkyAPI.getProductByProductID(testProductID)).thenReturn(new Product());
         when(mockProductDAO.findProductByProductID(testProductID)).thenReturn(null);
-
 
         GetProductHandler getProductHandler = new GetProductHandler(mockProductDAO);
 
