@@ -42,11 +42,10 @@ public class ProductDAOImpl implements ProductDAO {
                 .orElse(null);
     }
 
-    public void updateRetailProduct(MyRetailProduct productToUpdate) {
+    public UpdateResults updateRetailProduct(MyRetailProduct productToUpdate) {
         final Query<MyRetailProduct> productQuery = datastore.createQuery(MyRetailProduct.class).filter("itemID", productToUpdate.getItemID());
         final UpdateOperations<MyRetailProduct> updateOperations = datastore.createUpdateOperations(MyRetailProduct.class).set("currentPrice", productToUpdate.getCurrentPrice());
-        final UpdateResults updateResults = datastore.update(productQuery, updateOperations);
-        System.out.println(updateResults.getUpdatedCount());
+        return datastore.update(productQuery, updateOperations);
     }
 
 }

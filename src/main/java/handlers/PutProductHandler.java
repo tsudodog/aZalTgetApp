@@ -17,6 +17,7 @@ public class PutProductHandler extends AbstractRequestHandler<JsonObject> {
 
     public PutProductHandler(ProductDAO productDAO) {
         super(JsonObject.class, productDAO);
+        this.productDAO = productDAO;
     }
 
     @Override
@@ -24,7 +25,6 @@ public class PutProductHandler extends AbstractRequestHandler<JsonObject> {
 
         String productID = StringUtils.isNumeric(queryParams.get(":productid")) ? queryParams.get(":productid") : "";
         if (StringUtils.isNotEmpty(productID)) {
-            ProductDAOImpl productDAO = new ProductDAOImpl();
             Gson gson = new Gson();
             JsonObject jso = gson.fromJson(value, JsonObject.class);
             jso.addProperty("itemID", productID);

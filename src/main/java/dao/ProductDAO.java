@@ -1,6 +1,7 @@
 package dao;
 
 import myRetail.MyRetailProduct;
+import xyz.morphia.query.UpdateResults;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ public interface ProductDAO {
 
     MyRetailProduct findProductByProductID(final String productID);
 
-    void updateRetailProduct(MyRetailProduct productToUpdate);
+    UpdateResults updateRetailProduct(MyRetailProduct productToUpdate);
 }
