@@ -42,7 +42,7 @@ public abstract class AbstractRequestHandler<V> implements RequestHandler<V>, Ro
         Map<String, String> urlParams = request.params();
         Answer answer = process(value, urlParams);
         response.status(answer.getCode());
-        response.type("application/json");
+        response.type(answer.getContentType());
         response.body(answer.getBody());
         return answer;
     }

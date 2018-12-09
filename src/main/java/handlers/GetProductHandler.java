@@ -37,6 +37,7 @@ public class GetProductHandler extends AbstractRequestHandler<String> {
         JsonObject jso = new JsonObject();
         jso.addProperty("name", Optional.of(redSkyProduct.getProduct().getItem().getProductDescription().getTitle()).orElse(""));
         jso.add("current_price", gson.toJsonTree(myRetailProduct.getCurrentPrice()));
-        return new Answer(200, redSkyProduct == null ? "{\"error\" : \"Product Not Found\"}" : jso.toString());
+        return new Answer(200, redSkyProduct == null ? "{\"error\" : \"Product Not Found\"}" : jso.toString(), Answer.APPLICATION_JSON);
     }
+
 }

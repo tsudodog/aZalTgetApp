@@ -21,21 +21,20 @@ public class PutProductHandler extends AbstractRequestHandler<JsonObject> {
 
     @Override
     protected Answer processImpl(JsonObject value, Map<String, String> queryParams) {
+        
         String productID = StringUtils.isNumeric(queryParams.get(":productid")) ? queryParams.get(":productid") : "";
+        if (StringUtils.isNotEmpty(productID)) {
+            ProductDAOImpl productDAO = new ProductDAOImpl();
+            Gson gson = new Gson();
+            JsonObject jso = gson.fromJson(value, JsonObject.class);
+            jso.addProperty("itemID", productID);
+            productDAO.updateRetailProduct(gson.fromJson(jso, MyRetailProduct.class));
+            return new Answer(200, "update to " + productID + " was successful!", Answer.TEXT_PLAIN);
+
+        }
+        return new Answer(500, "the productid provided was not valid", Answer.TEXT_PLAIN);
 
 
-//        String contentType = req.headers("Content-Type");
+ }
 
-//        if ("application/json".equals(contentType) && StringUtils.isNotEmpty(productID)) {
-            // this is JSON information and can be parsed
-            // use GSON to map to Pojo
-        ProductDAOImpl productDAO = new ProductDAOImpl();
-        Gson gson = new Gson();
-        JsonObject jso = gson.fromJson(value, JsonObject.class);
-        jso.addProperty("itemID", productID);
-        productDAO.updateRetailProduct(gson.fromJson(jso, MyRetailProduct.class));
-//        }
-
-        return new Answer(200, "update to " + productID + " was successful!");
-    }
 }

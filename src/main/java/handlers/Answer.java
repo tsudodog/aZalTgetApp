@@ -2,9 +2,48 @@ package handlers;
 
 public class Answer {
 
+    public static final String APPLICATION_JSON = "application/json";
+    public static final String TEXT_PLAIN = "text/plain";
+    private int code;
+    private String body;
+    private String contentType;
+
+
+    public Answer(int code, String body, String contentType) {
+        this.code = code;
+        this.body = body;
+        this.contentType = contentType;
+    }
+
     public Answer(int code) {
         this.code = code;
         this.body = "";
+        this.contentType = TEXT_PLAIN;
+    }
+
+
+    public String getBody() {
+        return body;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
     @Override
@@ -32,23 +71,8 @@ public class Answer {
         return getBody();
     }
 
-    public String getBody() {
-        return body;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    private int code;
-    private String body;
-
-    public Answer(int code, String body){
-        this.code = code;
-        this.body = body;
-    }
 
     public static Answer ok(String body) {
-        return new Answer(200, body);
+        return new Answer(200, body, TEXT_PLAIN);
     }
 }
