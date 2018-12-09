@@ -20,6 +20,7 @@ public class GetProductHandler extends AbstractRequestHandler<String> {
 
     public GetProductHandler(ProductDAO productDAO) {
         super(String.class, productDAO);
+        this.productDAO = productDAO;
     }
 
     @Override
@@ -27,7 +28,6 @@ public class GetProductHandler extends AbstractRequestHandler<String> {
         String productID = StringUtils.isNumeric(queryParams.get(":productid")) ? queryParams.get(":productid") : "";
         System.out.println("productID \t"+productID);
         Product redSkyProduct = RedSkyAPI.getProductByProductID(productID);
-        productDAO = new ProductDAOImpl();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         MyRetailProduct myRetailProduct = productDAO.findProductByProductID(productID);
         if(myRetailProduct == null){
