@@ -1,3 +1,5 @@
+package handlers;
+
 import java.util.Map;
 
 public interface RequestHandler<V> {

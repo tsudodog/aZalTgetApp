@@ -1,8 +1,11 @@
+package handlers;
+
 import com.google.gson.Gson;
 import dao.ProductDAO;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+
 
 
 import java.util.HashMap;
@@ -37,14 +40,9 @@ public abstract class AbstractRequestHandler<V> implements RequestHandler<V>, Ro
         Gson gson = new Gson();
         V value = gson.fromJson(request.body(), valueClass);
         Map<String, String> urlParams = request.params();
-
         Answer answer = process(value, urlParams);
         response.status(answer.getCode());
-        if (shouldReturnHtml(request)) {
-            response.type("text/html");
-        } else {
-            response.type("application/json");
-        }
+        response.type("application/json");
         response.body(answer.getBody());
         return answer;
     }

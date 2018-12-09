@@ -3,11 +3,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import dao.ProductDAO;
 import dao.ProductDAOImpl;
+import handlers.GetProductHandler;
+import handlers.PutProductHandler;
 import myRetail.MyRetailProduct;
 import redsky.Product;
 import org.apache.commons.lang3.StringUtils;
 import redsky.RedSkyAPI;
-import spark.Route;
 
 import java.util.Optional;
 
@@ -29,27 +30,10 @@ public class Main {
         port(getHerokuAssignedPort());
         ProductDAO productDAO2 = new ProductDAOImpl();
 
-        get("/experiment/:productID", new GetProductHandler(productDAO2));
+        get("/experiment/:productid", new GetProductHandler(productDAO2));
+        get("/products/:productID", new GetProductHandler(productDAO2));
 
-
-        get("/products/:productID", (req, res) -> {
-            String productID = StringUtils.isNumeric(req.params(":productID")) ? req.params(":productID") : "";
-            System.out.println("productID \t"+productID);
-            Product redSkyProduct = RedSkyAPI.getProductByProductID(productID);
-            ProductDAO productDAO = new ProductDAOImpl();
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            MyRetailProduct myRetailProduct = productDAO.findProductByProductID(productID);
-            if(myRetailProduct == null){
-                myRetailProduct = new MyRetailProduct(productID);
-                productDAO.addProduct(myRetailProduct);
-            }
-            JsonObject jso = new JsonObject();
-            jso.addProperty("name", Optional.of(redSkyProduct.getProduct().getItem().getProductDescription().getTitle()).orElse(""));
-            jso.add("current_price", gson.toJsonTree(myRetailProduct.getCurrentPrice()));
-            return redSkyProduct == null ? "{\"error\" : \"Product Not Found\"}" : jso.toString();
-        });
-
-
+        put("/experiment/:productid", new PutProductHandler(productDAO2));
 
         put("/products/:productID", (req, res) -> {
             String productID = StringUtils.isNumeric(req.params(":productID")) ? req.params(":productID") : "";
@@ -70,12 +54,14 @@ public class Main {
             return "update to " +  productID+ " was successful!";
         });
 
-        notFound("<html><body><h1>You seem to be lost!</h1></body></html>");
-        internalServerError("<html><body><h1>Fail Whale goes splat!</h1></body></html>");
+
         get("/", (req, res) -> {
             return "Server Working";
         });
 
+
+        notFound("<html><body><h1>You seem to be lost!</h1></body></html>");
+//        internalServerError("<html><body><h1>Fail Whale goes splat!</h1></body></html>");
 
     }
 }

@@ -1,3 +1,5 @@
+package handlers;
+
 public class Answer {
 
     public Answer(int code) {
@@ -27,7 +29,7 @@ public class Answer {
 
     @Override
     public String toString() {
-        return "Answer(code=" + code + ", body=" + body + ")";
+        return getBody();
     }
 
     public String getBody() {
