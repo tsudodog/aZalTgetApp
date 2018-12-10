@@ -64,12 +64,6 @@ public class PutProductHandlerTest {
         Map<String, String> valueMap = new TreeMap<>();
         valueMap.put(":productid", testProductID);
 
-        // need to validate that the id is added to the object passed to the DB
-        Gson gson = new Gson();
-        JsonObject testJsonObject = gson.fromJson(goodJsonObjectString, JsonObject.class);
-        testJsonObject.addProperty("itemID", testProductID);
-        MyRetailProduct mrp = gson.fromJson(testJsonObject, MyRetailProduct.class);
-
         PutProductHandler putProductHandler = new PutProductHandler(mockProductDAO);
 
         Answer testAnswer = putProductHandler.process(goodJsonObject, valueMap);
@@ -82,5 +76,34 @@ public class PutProductHandlerTest {
         assertEquals(expectedBody, testAnswer.getBody());
         assertEquals(Answer.TEXT_PLAIN, testAnswer.getContentType());
 
+    }
+
+
+    @Test
+    public void testPutWithPutRequestBadFormatEmptyObject(){
+        final String testProductID = "2222";
+        Map<String, String> valueMap = new TreeMap<>();
+        valueMap.put(":productid", testProductID);
+        PutProductHandler putProductHandler = new PutProductHandler(mockProductDAO);
+        Answer testAnswer = putProductHandler.process(new JsonObject(), valueMap);
+        final String expectedBody = "the productid provided was not valid";
+        assertEquals(expectedBody, testAnswer.getBody());
+        assertEquals(Answer.TEXT_PLAIN, testAnswer.getContentType());
+        assertEquals(500, testAnswer.getCode());
+    }
+
+    @Test
+    public void testPutWithPutRequestBadFormatWithoutCorrectField(){
+        final String testProductID = "2222";
+        Map<String, String> valueMap = new TreeMap<>();
+        valueMap.put(":productid", testProductID);
+        PutProductHandler putProductHandler = new PutProductHandler(mockProductDAO);
+        JsonObject jso = new JsonObject();
+        jso.addProperty("otherProperty", "otherValue");
+        Answer testAnswer = putProductHandler.process(jso, valueMap);
+        final String expectedBody = "the productid provided was not valid";
+        assertEquals(expectedBody, testAnswer.getBody());
+        assertEquals(Answer.TEXT_PLAIN, testAnswer.getContentType());
+        assertEquals(500, testAnswer.getCode());
     }
 }

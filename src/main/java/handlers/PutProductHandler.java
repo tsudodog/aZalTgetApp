@@ -24,7 +24,8 @@ public class PutProductHandler extends AbstractRequestHandler<JsonObject> {
     protected Answer processImpl(JsonObject value, Map<String, String> queryParams) {
 
         String productID = StringUtils.isNumeric(queryParams.get(":productid")) ? queryParams.get(":productid") : "";
-        if (StringUtils.isNotEmpty(productID)) {
+        if (StringUtils.isNotEmpty(productID) && value.size() != 0 && value.has("currentPrice")) {
+
             Gson gson = new Gson();
             JsonObject jso = gson.fromJson(value, JsonObject.class);
             jso.addProperty("itemID", productID);

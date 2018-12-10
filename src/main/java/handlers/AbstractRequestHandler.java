@@ -5,12 +5,17 @@ import dao.ProductDAO;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-
-
-
-import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * The AbstractRequestHandler is designed to implement the Route interface, allowing it to
+ * function in place of the lambda functions frequenlty found in smaller Spark applications.
+ * This makes the behaviour extremely easy to test as the handle method calls the process method
+ * which in turn calles the actual implementation. Making the Request Handler function with generics
+ * allows this abstract class to handle multiple types of data and different formats.
+ * @param <V>
+ */
 public abstract class AbstractRequestHandler<V> implements RequestHandler<V>, Route {
     private Class<V> valueClass;
     private ProductDAO productDAO;
