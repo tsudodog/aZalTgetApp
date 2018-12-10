@@ -16,6 +16,16 @@ The application accepts two endpoints
 | PUT      | /products/:productID | application/json |
 
 
+The following is an example of the body the PUT /products/:productID is expecting
+``` json
+{
+    "currentPrice" : {
+        "value" : 654.23,
+        "currencyCode" : "AUD"
+    }
+}
+```
+
 Each endpoint has a postman example that can be found [HERE](https://app.getpostman.com/run-collection/99ecdab871a606d074fb)
 
 
@@ -32,3 +42,5 @@ The application is hosted on [heroku](http://heroku.com) and the instance of Mon
 at [Mlab](https://mlab.com)
 
 ## Coding Philosophy
+* Write code that the next engineer that works on it does not hate the original author.
+* If it is not testable it is detestable!
