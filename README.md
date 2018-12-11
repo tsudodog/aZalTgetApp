@@ -44,3 +44,9 @@ at [Mlab](https://mlab.com)
 ## Coding Philosophy
 * Write code that the next engineer that works on it does not hate the original author.
 * If it is not testable it is detestable!
+
+## Building locally
+The application is a standard Maven project which should be able to be pulled from the repository and
+have the dependencies downloaded automatically. The application expects two environment variables mdb_usr
+and mdb_pass for the database username and password. The database connection string will also need to be changed
+to reflect the location of the mongodb instance you wish to use.
